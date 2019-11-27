@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -27,20 +26,23 @@ func CreateTinyURL(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 	longURL := r.Form["longURL"][0]
 	ok, message, tinyURL := models.CreateTinyURL(REDIS_CLIENT, longURL, time.Hour)
 	if !ok {
-		log.Printf("create tiny url failed! %s", message)
+		fmt.Printf("POST: create tiny url failed! %s\n", message)
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%s", message)
 	}
-
+	fmt.Printf("POST: create tiny url succed message: %s tinyURL: \n", message, tinyURL)
 	fmt.Fprintf(w, "tinyurl created %s!", tinyURL)
 }
 
 func RetrieveLongURL(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	ok, message, longURL := models.RetrieveLongURL(REDIS_CLIENT, ps.ByName("tinyurl"))
 	if !ok {
+		fmt.Printf("GET: retrieval failed, message: %s\n", message)
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "retrieval failed, message: %s", message)
 	} else {
+		fmt.Printf("GET: longURL success retrieved %s\n", longURL)
+
 		fmt.Fprintf(w, "longURL success retrieved %s", longURL)
 	}
 }

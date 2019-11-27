@@ -24,6 +24,7 @@ func main() {
 
 	conn, err := grpc.Dial("kgs-service:50052", grpc.WithInsecure())
 	if err != nil {
+		fmt.Println("Dial to gRPC failed")
 		panic(err)
 	}
 	kgsClient := pb.NewKGSServiceClient(conn)
