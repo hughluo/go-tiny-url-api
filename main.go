@@ -5,16 +5,17 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/hughluo/go-tiny-url-api/controllers"
 	"github.com/hughluo/go-tiny-url-api/models"
+	"github.com/hughluo/go-tiny-url/pb"
+	UTILS "github.com/hughluo/go-tiny-url/utils"
 	"github.com/julienschmidt/httprouter"
+	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/hughluo/go-tiny-url/pb"
-	"google.golang.org/grpc"
 )
 
 func main() {
+	UTILS.ConfigureLog()
 	// Configure redis client
 	redisClient := CreateClient()
 	controllers.SetRedisClient(redisClient)
