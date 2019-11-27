@@ -2,11 +2,11 @@ package models
 
 import (
 	"errors"
-	"time"
-
+	"fmt"
 	"github.com/go-redis/redis/v7"
 	"github.com/hughluo/go-tiny-url/pb"
 	"golang.org/x/net/context"
+	"time"
 )
 
 var KGS_CLIENT pb.KGSServiceClient
